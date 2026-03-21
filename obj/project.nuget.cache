@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "NSOenibzwgw=",
+  "success": true,
+  "projectFilePath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj",
+  "expectedPackageFiles": [
+    "/Users/a.silva/.nuget/packages/amazon.lambda.apigatewayevents/2.7.3/amazon.lambda.apigatewayevents.2.7.3.nupkg.sha512",
+    "/Users/a.silva/.nuget/packages/amazon.lambda.core/2.5.0/amazon.lambda.core.2.5.0.nupkg.sha512",
+    "/Users/a.silva/.nuget/packages/amazon.lambda.serialization.systemtextjson/2.4.4/amazon.lambda.serialization.systemtextjson.2.4.4.nupkg.sha512",
+    "/Users/a.silva/.nuget/packages/microsoft.netcore.app.ref/8.0.20/microsoft.netcore.app.ref.8.0.20.nupkg.sha512",
+    "/Users/a.silva/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.20/microsoft.aspnetcore.app.ref.8.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}

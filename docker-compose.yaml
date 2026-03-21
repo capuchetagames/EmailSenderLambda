@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  emailsenderapi:
+    container_name: emailsenderapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5200:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080

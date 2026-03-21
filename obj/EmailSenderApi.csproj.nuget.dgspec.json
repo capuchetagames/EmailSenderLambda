@@ -1,0 +1,98 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj": {}
+  },
+  "projects": {
+    "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj",
+        "projectName": "EmailSenderApi",
+        "projectPath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj",
+        "packagesPath": "/Users/a.silva/.nuget/packages/",
+        "outputPath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/a.silva/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/bingaodobrasil/index.json": {},
+          "https://nuget.pkg.github.com/bingaodobrasil/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Amazon.Lambda.APIGatewayEvents": {
+              "target": "Package",
+              "version": "[2.7.3, )"
+            },
+            "Amazon.Lambda.Core": {
+              "target": "Package",
+              "version": "[2.5.0, )"
+            },
+            "Amazon.Lambda.Serialization.SystemTextJson": {
+              "target": "Package",
+              "version": "[2.4.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "linux-arm64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
