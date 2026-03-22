@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NSOenibzwgw=",
+  "dgSpecHash": "eC+FRUHhygk=",
   "success": true,
-  "projectFilePath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj",
+  "projectFilePath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderLambda/EmailSenderApi.csproj",
   "expectedPackageFiles": [
     "/Users/a.silva/.nuget/packages/amazon.lambda.apigatewayevents/2.7.3/amazon.lambda.apigatewayevents.2.7.3.nupkg.sha512",
     "/Users/a.silva/.nuget/packages/amazon.lambda.core/2.5.0/amazon.lambda.core.2.5.0.nupkg.sha512",

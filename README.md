@@ -108,6 +108,30 @@ aws --endpoint-url=http://localhost:4566 lambda create-function \
 
 ---
 
+### 6.1 Atualizar o código na AWS (após alterações)
+
+Sempre que fizer mudanças no código, repita os passos abaixo para gerar um novo ZIP e enviar para a AWS:
+
+```bash
+# 1. Limpa e publica novamente
+rm -rf publish
+dotnet publish -c Release -o ./publish -r linux-arm64 --self-contained false
+
+# 2. Gera o ZIP
+cd publish
+zip -r ../EmailSenderLambda.zip *
+cd ..
+
+# 3. Envia para a AWS
+aws lambda update-function-code \
+  --function-name EmailSenderLambda \
+  --zip-file fileb://EmailSenderLambda.zip
+```
+
+> Para o **LocalStack**, adicione `--endpoint-url=http://localhost:4566` em todos os comandos `aws`.
+
+---
+
 ### 7. Criar a Function URL (necessária para chamadas HTTP)
 
 ```bash
@@ -280,4 +304,29 @@ Com ele você consegue:
 **Download e documentação oficial:**
 👉 [https://docs.localstack.cloud/user-guide/tools/localstack-desktop/](https://docs.localstack.cloud/user-guide/tools/localstack-desktop/)
 
-> O LocalStack Desktop se conecta automaticamente à instância do LocalStack rodando em `localhost:4566`. Basta deixar o container do LocalStack ativo e abrir o app.
+---
+
+### ❌ `{"Message":"Forbidden"}` ao chamar a Function URL
+
+**Sintoma:** O cURL ou Postman retorna `403 Forbidden` ao tentar chamar o endpoint da Lambda.
+
+**Causa:** A Function URL foi criada com `AuthType = AWS_IAM`, que exige autenticação com assinatura Sigv4 em cada requisição. Como a nossa Lambda é pública, o tipo deve ser `NONE`.
+
+**Solução:** Atualize a configuração da Function URL via CLI:
+
+```bash
+# AWS real
+aws lambda update-function-url-config \
+  --function-name EmailSenderLambda \
+  --auth-type NONE
+
+# LocalStack
+aws --endpoint-url=http://localhost:4566 lambda update-function-url-config \
+  --function-name EmailSenderLambda \
+  --auth-type NONE
+```
+
+Ou pelo **Console AWS**:
+1. Lambda → `EmailSenderLambda` → aba **Configuration**
+2. Menu lateral **Function URL** → **Edit**
+3. Altere **Auth type** de `AWS_IAM` para **`NONE`** → Salve

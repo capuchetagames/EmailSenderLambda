@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj": {}
+    "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderLambda/EmailSenderApi.csproj": {}
   },
   "projects": {
-    "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj": {
+    "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderLambda/EmailSenderApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj",
+        "projectUniqueName": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderLambda/EmailSenderApi.csproj",
         "projectName": "EmailSenderApi",
-        "projectPath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/EmailSenderApi.csproj",
+        "projectPath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderLambda/EmailSenderApi.csproj",
         "packagesPath": "/Users/a.silva/.nuget/packages/",
-        "outputPath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/obj/",
+        "outputPath": "/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderLambda/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/a.silva/.nuget/NuGet/NuGet.Config"

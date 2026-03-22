@@ -12,9 +12,10 @@ public class Function
         APIGatewayHttpApiV2ProxyRequest request,
         ILambdaContext context)
     {
-        var path = request.RawPath ?? "";
+        var path = (request.RawPath ?? "").TrimEnd('/');
+        var method = request.RequestContext?.Http?.Method?.ToUpper() ?? "";
 
-        if (request.RequestContext?.Http?.Method == "POST" && path == "/api/emails/welcome")
+        if (method == "POST" && path == "/welcome")
         {
             var payload = JsonSerializer.Deserialize<WelcomeEmailRequest>(request.Body ?? "{}",
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -28,7 +29,7 @@ public class Function
             return Ok(new { message = "E-mail de boas-vindas acionado pela Lambda com sucesso!" });
         }
 
-        if (request.RequestContext?.Http?.Method == "POST" && path == "/api/emails/payment-status")
+        if (method == "POST" && path == "/payment-status")
         {
             var payload = JsonSerializer.Deserialize<PaymentEmailRequest>(request.Body ?? "{}",
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
