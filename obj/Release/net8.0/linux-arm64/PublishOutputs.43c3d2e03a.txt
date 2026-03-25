@@ -1,7 +1,0 @@
-/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/publish/EmailSenderApi.dll
-/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/publish/EmailSenderApi.deps.json
-/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/publish/EmailSenderApi.runtimeconfig.json
-/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/publish/EmailSenderApi.pdb
-/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/publish/Amazon.Lambda.APIGatewayEvents.dll
-/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/publish/Amazon.Lambda.Core.dll
-/Users/a.silva/Desktop/Projects/PosFiap/EmailSenderApi/publish/Amazon.Lambda.Serialization.SystemTextJson.dll
