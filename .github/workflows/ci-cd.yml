@@ -1,0 +1,48 @@
+name: CI/CD Pipeline - Email Sender Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-2
+  LAMBDA_FUNCTION_NAME: EmailSenderLambda
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy to AWS Lambda
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install AWS Lambda Tools
+        run: dotnet tool install -g Amazon.Lambda.Tools
+
+      - name: Restore dependencies
+        run: dotnet restore EmailSenderApi.csproj
+
+      - name: Build and Package
+        run: |
+          # A ferramenta da AWS compila e empacota tudo num .zip pronto para Lambda
+          dotnet lambda package -c Release -o ./EmailSenderLambda.zip
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.LAMBDA_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.LAMBDA_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to AWS Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://EmailSenderLambda.zip \
+            --region ${{ env.AWS_REGION }}
