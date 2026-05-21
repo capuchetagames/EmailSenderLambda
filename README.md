@@ -3,12 +3,12 @@
 Função AWS Lambda em C# (.NET 8) responsável pelo envio de e-mails transacionais da plataforma **FiapStore**.
 
 Atualmente expõe dois endpoints:
-- `POST /api/emails/welcome` — E-mail de boas-vindas após criação de usuário
-- `POST /api/emails/payment-status` — E-mail de notificação de status de pagamento
+- `POST /welcome` — E-mail de boas-vindas após criação de usuário
+- `POST /payment-status` — E-mail de notificação de status de pagamento
 
 ---
 
-## 📋 Pré-requisitos
+## Pré-requisitos
 
 Certifique-se de ter instalado na sua máquina:
 
@@ -21,7 +21,7 @@ Certifique-se de ter instalado na sua máquina:
 
 ---
 
-## 🚀 Passo a Passo: Subindo a Lambda no LocalStack
+## Passo a Passo: Subindo a Lambda no LocalStack
 
 ### 1. Subir o LocalStack via Docker
 
@@ -147,12 +147,12 @@ http://abc123.lambda-url.us-east-1.localhost.localstack.cloud:4566/
 
 ---
 
-## 🧪 Testando os Endpoints
+## Testando os Endpoints
 
 ### Boas-Vindas (Welcome)
 
 ```bash
-curl -X POST {FunctionUrl}/api/emails/welcome \
+curl -X POST {FunctionUrl}/welcome \
   -H "Content-Type: application/json" \
   -d '{
     "UserId": 105,
@@ -171,7 +171,7 @@ curl -X POST {FunctionUrl}/api/emails/welcome \
 ### Status de Pagamento
 
 ```bash
-curl -X POST {FunctionUrl}/api/emails/payment-status \
+curl -X POST {FunctionUrl}/payment-status \
   -H "Content-Type: application/json" \
   -d '{
     "Status": "Aprovado",
@@ -187,7 +187,7 @@ curl -X POST {FunctionUrl}/api/emails/payment-status \
 
 ---
 
-## 🔧 Comandos Úteis
+## Comandos Úteis
 
 | Objetivo | Comando |
 |---|---|
@@ -198,19 +198,75 @@ curl -X POST {FunctionUrl}/api/emails/payment-status \
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 EmailSenderLambda/
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml            # Pipeline de CI/CD (GitHub Actions)
 ├── Function.cs                  # Handler principal da Lambda com os dois endpoints
 ├── EmailSenderApi.csproj        # Definição do projeto (.NET 8, SDK Lambda)
+├── Dockerfile                   # Imagem Docker para execução local via container
+├── docker-compose.yaml          # Compose para subir a API localmente na porta 5200
 ├── appsettings.json
 └── appsettings.Development.json
 ```
 
 ---
 
-## 📦 Dependências NuGet
+## Docker (Execução Local via Container)
+
+O projeto inclui um `Dockerfile` e um `docker-compose.yaml` para executar a API localmente como container, útil para testes de integração sem precisar do LocalStack.
+
+### Subir com Docker Compose
+
+```bash
+docker-compose up --build
+```
+
+A API ficará disponível em `http://localhost:5200`.
+
+### Testar via container
+
+```bash
+curl -X POST http://localhost:5200/welcome \
+  -H "Content-Type: application/json" \
+  -d '{"UserId": 1, "Name": "Teste", "Email": "teste@email.com"}'
+```
+
+> **Nota:** O Dockerfile utiliza a imagem base `mcr.microsoft.com/dotnet/aspnet:9.0` e expõe a porta `8080` internamente, mapeada para `5200` no host via compose.
+
+---
+
+## CI/CD (GitHub Actions)
+
+O pipeline de CI/CD está configurado em `.github/workflows/ci-cd.yml` e é disparado automaticamente a cada push na branch `main`.
+
+### Etapas do pipeline
+
+| Etapa | Descrição |
+|---|---|
+| Checkout | Clona o repositório |
+| Setup .NET 8 | Configura o SDK .NET 8 |
+| Install Lambda Tools | Instala `Amazon.Lambda.Tools` globalmente |
+| Restore | Restaura dependências NuGet |
+| Build & Package | Compila e empacota a Lambda em `.zip` via `dotnet lambda package` |
+| Configure AWS Credentials | Autentica na AWS com os secrets do repositório |
+| Deploy | Atualiza o código da Lambda na AWS via `aws lambda update-function-code` |
+
+### Secrets necessários no repositório
+
+| Secret | Descrição |
+|---|---|
+| `LAMBDA_AWS_ACCESS_KEY_ID` | Access Key ID da conta AWS |
+| `LAMBDA_AWS_SECRET_ACCESS_KEY` | Secret Access Key da conta AWS |
+
+> A região configurada é `us-east-2` e o nome da função é `EmailSenderLambda`.
+
+---
+
+## Dependências NuGet
 
 | Pacote | Versão | Descrição |
 |---|---|---|
@@ -220,9 +276,9 @@ EmailSenderLambda/
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
-### ❌ `Execution environment timed out during startup`
+### `Execution environment timed out during startup`
 
 **Sintoma:** A chamada ao endpoint retorna `500` e o log do LocalStack exibe:
 ```
@@ -274,7 +330,7 @@ Usar `Amazon.Lambda.AspNetCoreServer.Hosting` sobe um servidor web ASP.NET Core 
 
 ---
 
-### ❌ Chamada direta para `localhost:4566/api/emails/welcome` retorna 200 vazio
+### Chamada direta para `localhost:4566/api/emails/welcome` retorna 200 vazio
 
 **Sintoma:** O curl bate em `http://localhost:4566/api/emails/welcome` e retorna HTTP 200, mas sem body de resposta.
 
@@ -291,22 +347,22 @@ curl -X POST http://abc123.lambda-url.us-east-1.localhost.localstack.cloud:4566/
 
 ---
 
-## 🖥️ Dica: LocalStack Desktop (Dashboard Visual)
+## Dica: LocalStack Desktop (Dashboard Visual)
 
 Para acompanhar e gerenciar os recursos criados no LocalStack de forma visual (sem precisar ficar rodando comandos AWS CLI), utilize o **LocalStack Desktop**.
 
 Com ele você consegue:
-- 📊 Ver todas as funções Lambda criadas e seus status
-- 📋 Acompanhar os logs de execução em tempo real
-- 🔍 Inspecionar configurações de IAM, S3, SQS e outros serviços
-- ▶️ Invocar funções Lambda diretamente pela interface
+- Ver todas as funções Lambda criadas e seus status
+- Acompanhar os logs de execução em tempo real
+- Inspecionar configurações de IAM, S3, SQS e outros serviços
+- Invocar funções Lambda diretamente pela interface
 
 **Download e documentação oficial:**
-👉 [https://docs.localstack.cloud/user-guide/tools/localstack-desktop/](https://docs.localstack.cloud/user-guide/tools/localstack-desktop/)
+ [https://docs.localstack.cloud/user-guide/tools/localstack-desktop/](https://docs.localstack.cloud/user-guide/tools/localstack-desktop/)
 
 ---
 
-### ❌ `{"Message":"Forbidden"}` ao chamar a Function URL
+## `{"Message":"Forbidden"}` ao chamar a Function URL
 
 **Sintoma:** O cURL ou Postman retorna `403 Forbidden` ao tentar chamar o endpoint da Lambda.
 
